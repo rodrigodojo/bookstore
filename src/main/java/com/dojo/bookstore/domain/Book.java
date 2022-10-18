@@ -2,7 +2,7 @@ package com.dojo.bookstore.domain;
 
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,11 +12,15 @@ public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private String author;
     private String text;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category categories;
 
     public Book(Integer id, String title, String author, String text, Category categories) {

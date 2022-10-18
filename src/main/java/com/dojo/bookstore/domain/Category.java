@@ -2,7 +2,7 @@ package com.dojo.bookstore.domain;
 
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +14,13 @@ public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String description;
 
+    @OneToMany(mappedBy = "categories")
     private List<Book> books = new ArrayList<>();
 
     public Category(Integer id, String name, String description) {
