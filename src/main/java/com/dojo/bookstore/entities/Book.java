@@ -1,4 +1,4 @@
-package com.dojo.bookstore.domain;
+package com.dojo.bookstore.entities;
 
 import lombok.NoArgsConstructor;
 
