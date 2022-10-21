@@ -3,12 +3,9 @@ package com.dojo.bookstore.services;
 import com.dojo.bookstore.dto.CategoryDTO;
 import com.dojo.bookstore.entities.Category;
 import com.dojo.bookstore.repositories.CategoryRepository;
-import com.dojo.bookstore.services.exceptions.DataIntegrityViolationException;
-import com.dojo.bookstore.services.exceptions.DatabaseException;
 import com.dojo.bookstore.services.exceptions.ObjectNotFoundException;
-import com.dojo.bookstore.services.exceptions.SQLIntegrityConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,12 +42,8 @@ public class CategoryService {
         findById(id);
         try {
             categoryRepository.deleteById(id);
-        }catch (EmptyResultDataAccessException e){
-            throw new ObjectNotFoundException(id.toString());
         }catch (DataIntegrityViolationException e){
-            throw new DatabaseException("Objeto não pode ser deletado , possui associados");
-        }catch (SQLIntegrityConstraintViolationException e) {
-            throw new SQLIntegrityConstraintViolationException("Objeto não pode ser deletado , possui associados");
+            throw new com.dojo.bookstore.services.exceptions.DataIntegrityViolationException("Objeto não pode ser deletado , possui associados");
         }
     }
 }
