@@ -1,5 +1,6 @@
 package com.dojo.bookstore.services;
 
+import com.dojo.bookstore.dto.CategoryDTO;
 import com.dojo.bookstore.entities.Category;
 import com.dojo.bookstore.repositories.CategoryRepository;
 import com.dojo.bookstore.services.exceptions.ObjectNotFoundException;
@@ -26,6 +27,13 @@ public class CategoryService {
 
     public Category create(Category obj){
         obj.setId(null);
+        return categoryRepository.save(obj);
+    }
+
+    public Category update(Integer id, CategoryDTO objDTO) {
+        Category obj = findById(id);
+        obj.setName(objDTO.getName());
+        obj.setDescription(objDTO.getDescription());
         return categoryRepository.save(obj);
     }
 }
