@@ -51,11 +51,7 @@ public class BookService {
     }
 
     public void delete(Integer id) {
-        findById(id);
-        try {
-            bookRepository.deleteById(id);
-        }catch (DataIntegrityViolationException e){
-            throw new com.dojo.bookstore.services.exceptions.DataIntegrityViolationException("Objeto não pode ser deletado , possui associados");
-        }
+        Book obj = findById(id);
+        bookRepository.deleteById(id);
     }
 }
