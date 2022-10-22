@@ -2,6 +2,7 @@ package com.dojo.bookstore.services;
 
 import com.dojo.bookstore.dto.BookDTO;
 import com.dojo.bookstore.entities.Book;
+import com.dojo.bookstore.entities.Category;
 import com.dojo.bookstore.repositories.BookRepository;
 import com.dojo.bookstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,10 @@ public class BookService {
         return bookRepository.findAllByCategory(id_cat);
     }
 
-    public Book create(Book obj){
+    public Book create(Integer id_cat ,Book obj){
         obj.setId(null);
+        Category cat = categoryService.findById(id_cat);
+        obj.setCategories(cat);
         return bookRepository.save(obj);
     }
 

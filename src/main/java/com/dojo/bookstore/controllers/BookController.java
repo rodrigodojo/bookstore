@@ -30,9 +30,9 @@ public class BookController {
         return ResponseEntity.ok().body(obj);
     }
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book obj){
-        obj = bookService.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+    public ResponseEntity<Book> create(@RequestParam (value = "category", defaultValue = "0")Integer id_cat , @RequestBody Book obj){
+        Book newObj = bookService.create(id_cat,obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/books/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
     @PutMapping(value = "/{id}")
