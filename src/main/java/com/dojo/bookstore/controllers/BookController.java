@@ -19,8 +19,8 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> findAll() {
-        List<Book> list = bookService.findAll();
+    public ResponseEntity<List<BookDTO>> findAll(@RequestParam(value = "category", defaultValue = "0") Integer id_cat) {
+        List<Book> list = bookService.findAll(id_cat);
         List<BookDTO> listDTO = list.stream().map(obj -> new BookDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }

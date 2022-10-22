@@ -17,13 +17,17 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private CategoryService categoryService;
+
     public Book findById(Integer id){
         Optional<Book> obj = bookRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado. Id : " + id + " Tipo: " + Book.class.getName()));
     }
 
-    public List<Book> findAll(){
-        return bookRepository.findAll();
+    public List<Book> findAll(Integer id_cat){
+        categoryService.findById(id_cat);
+        return bookRepository.findAllByCategory(id_cat);
     }
 
     public Book create(Book obj){
@@ -34,7 +38,6 @@ public class BookService {
     public Book update(Integer id, BookDTO objDTO) {
         Book obj = findById(id);
         obj.setTitle(objDTO.getTitle());
-        obj.setAuthor(objDTO.getAuthor());
         return bookRepository.save(obj);
     }
 
