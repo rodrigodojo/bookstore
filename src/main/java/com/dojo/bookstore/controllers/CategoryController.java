@@ -8,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
@@ -30,13 +32,13 @@ public class CategoryController {
         return ResponseEntity.ok().body(obj);
     }
     @PostMapping
-    public ResponseEntity<Category> create(@RequestBody Category obj){
+    public ResponseEntity<Category> create(@Valid @RequestBody Category obj){
         obj = categoryService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryDTO obj){
+    public ResponseEntity<CategoryDTO> update(@Valid @PathVariable Integer id, @RequestBody CategoryDTO obj){
         Category newObj = categoryService.update(id,obj);
         return ResponseEntity.ok().body(new CategoryDTO(newObj));
     }

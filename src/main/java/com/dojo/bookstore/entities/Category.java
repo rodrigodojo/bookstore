@@ -1,8 +1,10 @@
 package com.dojo.bookstore.entities;
 
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,11 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty(message = "field name is requested")
+    @Length(min = 3 , max = 100 , message = "this field get a minimal 3 letters and max that 100")
     private String name;
+    @NotEmpty(message = "field description is requested")
+    @Length(min = 3 , max = 200 , message = "this field get a minimal 3 letters and max that 200")
     private String description;
 
     @OneToMany(mappedBy = "categories")

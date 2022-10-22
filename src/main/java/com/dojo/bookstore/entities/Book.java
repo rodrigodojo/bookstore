@@ -2,8 +2,10 @@ package com.dojo.bookstore.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -16,8 +18,14 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty(message = "field title is requested")
+    @Length(min = 3 , max = 50 , message = "this field get a minimal 3 letters and max that 50")
     private String title;
+    @NotEmpty(message = "field author is requested")
+    @Length(min = 3 , max = 50 , message = "this field get a minimal 3 letters and max that 50")
     private String author;
+    @NotEmpty(message = "field text is requested")
+    @Length(min = 3 , max = 200000 , message = "this field get a minimal 3 letters and max that 200.000")
     private String text;
 
     @JsonIgnore
