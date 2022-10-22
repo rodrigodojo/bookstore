@@ -23,6 +23,9 @@ public class BookDTO implements Serializable {
         this.text = text;
     }
 
+    public BookDTO(Book obj) {
+    }
+
     public Integer getId() {
         return id;
     }

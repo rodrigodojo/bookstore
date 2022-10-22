@@ -1,8 +1,8 @@
 package com.dojo.bookstore.controllers;
 
-import com.dojo.bookstore.dto.CategoryDTO;
-import com.dojo.bookstore.entities.Category;
-import com.dojo.bookstore.services.CategoryService;
+import com.dojo.bookstore.dto.BookDTO;
+import com.dojo.bookstore.entities.Book;
+import com.dojo.bookstore.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,33 +16,33 @@ import java.util.stream.Collectors;
 @RequestMapping("/books")
 public class BookController {
     @Autowired
-    private CategoryService categoryService;
+    private BookService bookService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> findAll() {
-        List<Category> list = categoryService.findAll();
-        List<CategoryDTO> listDTO = list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
+    public ResponseEntity<List<BookDTO>> findAll() {
+        List<Book> list = bookService.findAll();
+        List<BookDTO> listDTO = list.stream().map(obj -> new BookDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Category> findById(@PathVariable Integer id){
-        Category obj = categoryService.findById(id);
+    public ResponseEntity<Book> findById(@PathVariable Integer id){
+        Book obj = bookService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
     @PostMapping
-    public ResponseEntity<Category> create(@RequestBody Category obj){
-        obj = categoryService.create(obj);
+    public ResponseEntity<Book> create(@RequestBody Book obj){
+        obj = bookService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryDTO obj){
-        Category newObj = categoryService.update(id,obj);
-        return ResponseEntity.ok().body(new CategoryDTO(newObj));
+    public ResponseEntity<BookDTO> update(@PathVariable Integer id, @RequestBody BookDTO obj){
+        Book newObj = bookService.update(id,obj);
+        return ResponseEntity.ok().body(new BookDTO(newObj));
     }
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id){
-        categoryService.delete(id);
+        bookService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
