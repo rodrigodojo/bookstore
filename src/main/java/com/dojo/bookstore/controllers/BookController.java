@@ -36,10 +36,17 @@ public class BookController {
         return ResponseEntity.created(uri).build();
     }
     @PutMapping(value = "/{id}")
-    public ResponseEntity<BookDTO> update(@PathVariable Integer id, @RequestBody BookDTO obj){
+    public ResponseEntity<Book> update(@PathVariable Integer id, @RequestBody Book obj){
         Book newObj = bookService.update(id,obj);
-        return ResponseEntity.ok().body(new BookDTO(newObj));
+        return ResponseEntity.ok().body(newObj);
     }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Book> updatePatch(@PathVariable Integer id, @RequestBody Book obj){
+        Book newObj = bookService.update(id,obj);
+        return ResponseEntity.ok().body(newObj);
+    }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         bookService.delete(id);

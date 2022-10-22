@@ -35,10 +35,16 @@ public class BookService {
         return bookRepository.save(obj);
     }
 
-    public Book update(Integer id, BookDTO objDTO) {
-        Book obj = findById(id);
-        obj.setTitle(objDTO.getTitle());
-        return bookRepository.save(obj);
+    public Book update(Integer id, Book obj) {
+        Book newObj = findById(id);
+        updateData(newObj,obj);
+        return bookRepository.save(newObj);
+    }
+
+    private void updateData(Book newObj, Book obj) {
+        newObj.setTitle(obj.getTitle());
+        newObj.setAuthor(obj.getAuthor());
+        newObj.setText(obj.getText());
     }
 
     public void delete(Integer id) {
